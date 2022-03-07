@@ -29,6 +29,10 @@ if (isset($_POST['update_user'])) { // if user clicked update_user button ...
 if (isset($_POST['save_user'])) {  // if user clicked save_user button ...
     saveUser();
 }
+
+if (isset($_POST['save_user1'])) {  // if user clicked save_user button ...
+    saveUser1();
+}
 // ACTION: fetch user for editting
 if (isset($_GET["edit_user"])) {
     $user_id = $_GET["edit_user"];
@@ -38,6 +42,11 @@ if (isset($_GET["edit_user"])) {
 if (isset($_GET['delete_user'])) {
     $user_id = $_GET['delete_user'];
     deleteUser($user_id);
+}
+
+if (isset($_GET['delete_user1'])) {
+    $user_id = $_GET['delete_user1'];
+    deleteUser1($user_id);
 }
 
 if (isset($_POST['update_profile'])) {
@@ -68,8 +77,8 @@ function updateUser($user_id)
         $result = modifyRecord($sql, 'sissi', [$username, $role_id, $email, $password, $user_id]);
 
         if ($result) {
-            $_SESSION['success_msg'] = "User account successfully updated";
-            header("location: " . BASE_URL . "admin/users/userList.php");
+            $_SESSION['success_msg'] = "User account successfully updated, Please log in again";
+            header("location: " . BASE_URL . "logout.php");
             exit(0);
         }
     } else {
@@ -102,6 +111,32 @@ function saveUser()
         }
     }
 }
+
+function saveUser1()
+{
+    global $mysqli, $errors, $username, $role_id, $email, $isEditing;
+    $errors = validateUser($_POST, ['save_user1']);
+    // receive all input values from the form
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); //encrypt the password before saving in the database
+    if (count($errors) === 0) {
+        if (isset($_POST['role_id'])) {
+            $role_id = $_POST['role_id'];
+        }
+        $sql = "INSERT INTO users SET username=?, role_id=?, email=?, password=?";
+        $result = modifyRecord($sql, 'siss', [$username, $role_id, $email, $password]);
+
+        if ($result) {
+            $_SESSION['success_msg'] = "User account created successfully";
+            header("location: " . BASE_URL . "admin/users/customerList.php");
+            exit(0);
+        } else {
+            $_SESSION['error_msg'] = "Something went wrong. Could not save user in Database";
+        }
+    }
+}
+
 function getAdminUsers()
 {
     global $mysqli;
@@ -152,6 +187,19 @@ function deleteUser($user_id)
     if ($result) {
         $_SESSION['success_msg'] = "User trashed!!";
         header("location: " . BASE_URL . "admin/users/userList.php");
+        exit(0);
+    }
+}
+
+function deleteUser1($user_id)
+{
+    global $mysqli;
+    $sql = "DELETE FROM users WHERE id=?";
+    $result = modifyRecord($sql, 'i', [$user_id]);
+
+    if ($result) {
+        $_SESSION['success_msg'] = "User trashed!!";
+        header("location: " . BASE_URL . "admin/users/customerList.php");
         exit(0);
     }
 }

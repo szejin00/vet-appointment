@@ -19,7 +19,7 @@ $customerUsers = getCustomerUsers();
 <body>
     <?php include(INCLUDE_PATH . "/layouts/admin_navbar.php") ?>
     <div class="col-md-8 col-md-offset-2">
-        <a href="userForm.php" class="btn btn-success">
+        <a href="userForm1.php" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             Create new user
         </a>
@@ -43,12 +43,12 @@ $customerUsers = getCustomerUsers();
                             <td><?php echo $value['username'] ?></td>
                             <td><?php echo $value['role']; ?></td>
                             <td class="text-center">
-                                <a href="<?php echo BASE_URL ?>admin/users/userForm.php?edit_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-success">
+                                <a href="<?php echo BASE_URL ?>admin/users/userForm1.php?edit_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-success">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a href="<?php echo BASE_URL ?>admin/users/userForm.php?delete_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-danger">
+                                <a href="<?php echo BASE_URL ?>admin/users/userForm1.php?delete_user1=<?php echo $value['id'] ?>" class="btn btn-sm btn-danger">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </td>

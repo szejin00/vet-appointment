@@ -85,7 +85,6 @@
                   <?php endif; ?>
                 </div>
                 <div class="form-group">
-                  <button type="submit" name="signup_btn" class="btn btn-danger pull-right">Delete Your Account</button>
                   <button type="submit" name="update_profile" class="btn btn-success">Update Profile</button>
                 </div>
               </div>

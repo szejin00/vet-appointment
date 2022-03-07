@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- Custome styles -->
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
@@ -23,7 +23,6 @@
             <a href="<?php echo BASE_URL . 'admin-activity.php' ?>" class="list-group-item">Activity</a>
             <a href="<?php echo BASE_URL . 'admin/users/userList.php' ?>" class="list-group-item">Manage Admin Users</a>
             <a href="<?php echo BASE_URL . 'admin/users/customerList.php' ?>" class="list-group-item">Manage Customer Users</a>
-            <!-- <a href="<?php echo BASE_URL . 'admin/roles/roleList.php' ?>" class="list-group-item">Manage Roles</a> -->
         </ul>
     </div>
     <?php include(INCLUDE_PATH . "/layouts/footer.php") ?>
