@@ -9,7 +9,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Modify Admin user Account</title>
+    <title>Modify Customer user Account</title>
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" /> -->
     <!-- Custome styles -->
@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                    <a href="userList.php" class="normal-link1" style="margin-bottom: 5px;">
+                    <a href="customerList.php" class="normal-link1" style="margin-bottom: 5px;">
                         <span class="material-icons">
                             arrow_back_ios
                         </span>
@@ -31,11 +31,11 @@
                     </a>
                     <br><br>
 
-                    <form class="form" action="userForm.php" method="post" enctype="multipart/form-data">
+                    <form class="form" action="userForm1.php" method="post" enctype="multipart/form-data">
                         <?php if ($isEditing === true) : ?>
-                            <h2 class="text-center">Update Admin user</h2>
+                            <h2 class="text-center">Update Customer user</h2>
                         <?php else : ?>
-                            <h2 class="text-center">Create Admin user</h2>
+                            <h2 class="text-center">Create Customer user</h2>
                         <?php endif; ?>
                         <hr><br><br>
                         <!-- if editting user, we need that user's id -->
@@ -92,7 +92,7 @@
                             <?php if ($isEditing === true) : ?>
                                 <button type="submit" name="update_user" class="btn btn-success btn-block btn-lg">Update user</button>
                             <?php else : ?>
-                                <button type="submit" name="save_user" class="btn btn-success btn-block btn-lg">Save user</button>
+                                <button type="submit" name="save_user1" class="btn btn-success btn-block btn-lg">Save user</button>
                             <?php endif; ?>
                         </div>
                     </form>

@@ -36,9 +36,9 @@ if (isset($_POST['submit'])) {
             $stmt = $mysqli->prepare("UPDATE ewallet SET total=total+? WHERE user_id=$id");
             $stmt->bind_param('d', $amount);
             if ($stmt->execute()) {
-                $create_transaction = "INSERT INTO transactions SET user_id=$id, card_name=?, card_num=?, card_expiry=?, cvv=?, created_at=?, amount=?";
+                $create_transaction = "INSERT INTO transactions SET user_id=$id, created_at=?, amount=?";
                 $create = $mysqli->prepare($create_transaction);
-                $create->bind_param('sssssd', $card_name, $card_num, $card_expiry, $cvv, $created_at, $amount);
+                $create->bind_param('sd', $created_at, $amount);
                 $create->execute();
                 $msg = "<div class='alert alert-success'>E-Wallet Balance Added.</div>";
                 $result_balance = $mysqli->query("SELECT * FROM ewallet WHERE user_id = $id");
@@ -50,13 +50,13 @@ if (isset($_POST['submit'])) {
             $mail->isSMTP();                      // Set mailer to use SMTP 
             $mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
             $mail->SMTPAuth = true;               // Enable SMTP authentication 
-            $mail->Username = 'szejin2000@gmail.com';   // SMTP username 
-            $mail->Password = 'boo000420.';   // SMTP password 
+            $mail->Username = 'animalclinic@gmail.com';   // SMTP username 
+            $mail->Password = 'fyptest123.';   // SMTP password 
             $mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
             $mail->Port = 587;                    // TCP port to connect to 
 
             // Sender info 
-            $mail->setFrom('szejin2000@gmail.com', 'Sze Jin');
+            $mail->setFrom('szejin2000@gmail.com', 'Animal Clinic');
             // $mail->addReplyTo('reply@codexworld.com', 'CodexWorld'); 
 
             // Add a recipient

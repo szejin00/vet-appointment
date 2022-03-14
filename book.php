@@ -20,7 +20,7 @@ if (isset($_GET['date'])) {
 
 if (isset($_POST['submit'])) {
     $name = $_POST['name'];
-    $email = $_POST['email'];
+    $reason = $_POST['reason'];
     $petname = $_POST['petname'];
     $contact = $_POST['contact'];
     $timeslot = $_POST['timeslot'];
@@ -35,8 +35,8 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows > 0) {
             $msg = "<div class='alert alert-danger'>Already Booked</div>";
         } else {
-            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, email, date, vet, petname, contact, approval, user_id, created_at) VALUES (?,?,?,?,?,?,?,?,?,?)");
-            $stmt->bind_param('ssssssssis', $name, $timeslot, $email, $date, $vet, $petname, $contact, $approval, $user_id, $created_at);
+            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, reason, date, vet, petname, contact, approval, user_id, created_at) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            $stmt->bind_param('ssssssssis', $name, $timeslot, $reason, $date, $vet, $petname, $contact, $approval, $user_id, $created_at);
             $stmt->execute();
             $msg = "<div class='alert alert-success'>Booking Successful</div>";
             $bookings[] = $timeslot;
@@ -86,14 +86,17 @@ function timeslots($duration, $cleanup, $start, $end)
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title></title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/main.css">
+    <title>Book Check-up Appointment</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
 </head>
 
-<body>
+<body id="background-gradient">
     <div class="container">
+    <a href="<?php echo BASE_URL . 'index.php' ?>" class="normal-link1">Home</a>
         <h1 class="text-center">Book for Date: <?php echo date('m/d/Y', strtotime($date)); ?></h1>
         <hr>
         <div class="row">
@@ -141,8 +144,8 @@ function timeslots($duration, $cleanup, $start, $end)
                                     <input required type="text" class="form-control" name="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Email</label>
-                                    <input required type="email" class="form-control" name="email">
+                                    <label for="">Reason</label>
+                                    <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="max 25 words">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Contact</label>
@@ -165,7 +168,8 @@ function timeslots($duration, $cleanup, $start, $end)
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script>
         $(".book").click(function() {
             var timeslot = $(this).attr('data-timeslot');

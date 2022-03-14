@@ -19,7 +19,7 @@ if (isset($_GET['date'])) {
 
 if (isset($_POST['submit'])) {
     $name = $_POST['name'];
-    $email = $_POST['email'];
+    $reason = $_POST['reason'];
     $petname = $_POST['petname'];
     $contact = $_POST['contact'];
     $timeslot = $_POST['timeslot'];
@@ -32,8 +32,8 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows > 0) {
             $msg = "<div class='alert alert-danger'>Already Booked</div>";
         } else {
-            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, email, date, vet, petname, contact, created_at) VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->bind_param('ssssssss', $name, $timeslot, $email, $date, $vet, $petname, $contact, $created_at);
+            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, reason, date, vet, petname, contact, created_at) VALUES (?,?,?,?,?,?,?,?)");
+            $stmt->bind_param('ssssssss', $name, $timeslot, $reason, $date, $vet, $petname, $contact, $created_at);
             $stmt->execute();
             $msg = "<div class='alert alert-success'>Booking Successfull</div>";
             $bookings[] = $timeslot;
@@ -138,8 +138,8 @@ function timeslots($duration, $cleanup, $start, $end)
                                     <input required type="text" class="form-control" name="name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Email</label>
-                                    <input required type="email" class="form-control" name="email">
+                                    <label for="">Reason</label>
+                                    <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="max 25 words">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Contact</label>

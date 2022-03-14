@@ -30,13 +30,13 @@ while($row=$id->fetch_assoc()) {
   $mail->isSMTP();                      // Set mailer to use SMTP 
   $mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
   $mail->SMTPAuth = true;               // Enable SMTP authentication 
-  $mail->Username = 'szejin2000@gmail.com';   // SMTP username 
-  $mail->Password = 'boo000420.';   // SMTP password 
+  $mail->Username = 'animalclinicfyp@gmail.com';   // SMTP username 
+  $mail->Password = 'fyptest123.';   // SMTP password 
   $mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
   $mail->Port = 587;                    // TCP port to connect to 
 
   // Sender info 
-  $mail->setFrom('szejin2000@gmail.com', 'Sze Jin');
+  $mail->setFrom('szejin2000@gmail.com', 'Animal Clinic');
   // $mail->addReplyTo('reply@codexworld.com', 'CodexWorld'); 
 
   // Add a recipient
@@ -77,7 +77,7 @@ while($row=$id->fetch_assoc()) {
       $bodyContent = '<h1>Unfortunately, your appointment has been cancelled.</h1>';
       $bodyContent .= '<p>Owner Name: ' . $row['name'] . '</p>';
       $bodyContent .= '<p>Pet Name: ' . $row['petname'] . '</p>';
-      $bodyContent .= '<p>Reason: ' . $row['email'] . '</p>';
+      $bodyContent .= '<p>Reason: ' . $row['reason'] . '</p>';
       $bodyContent .= '<p>Time slot: ' . $row['timeslot'] . '</p>';
       $bodyContent .= '<p>Appointment Date: ' . $row['date'] . '</p>';
       $bodyContent .= '<p>Vet: ' . $row['vet'] . '</p>';
@@ -104,7 +104,7 @@ while($row=$id->fetch_assoc()) {
 // define global constants
 define('ROOT_PATH', realpath(dirname(__FILE__))); // path to the root folder
 define('INCLUDE_PATH', realpath(dirname(__FILE__) . '/includes')); // Path to includes folder
-define('BASE_URL', 'http://localhost/fyp-project/'); // the home url of the website
+define('BASE_URL', 'http://localhost/3/'); // the home url of the website
 
 function getMultipleRecords($sql, $types = null, $params = [])
 {

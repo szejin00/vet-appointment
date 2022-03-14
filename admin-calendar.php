@@ -50,11 +50,11 @@ function build_calendar($month, $year)
 
     $calendar = "<table class='table table-bordered'>";
     $calendar .= "<center><h2>$monthName $year</h2>";
-    $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'>Previous Month</a> ";
+    $calendar .= "<a class='cal-link btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month - 1, 1, $year)) . "'><span class='help-block'>Previous Month</span></a> ";
 
-    $calendar .= " <a class='btn btn-xs btn-primary' href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
+    $calendar .= " <a class='cal-link btn btn-xs btn-primary' href='?month=" . date('m') . "&year=" . date('Y') . "'><span class='help-block'>Current Month</span></a> ";
 
-    $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month + 1, 1, $year)) . "'>Next Month</a></center><br>";
+    $calendar .= "<a class='cal-link btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, $month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, $month + 1, 1, $year)) . "'><span class='help-block'>Next Month</span></a></center><br>";
 
 
 
@@ -63,7 +63,7 @@ function build_calendar($month, $year)
     // Create the calendar headers
 
     foreach ($daysOfWeek as $day) {
-        $calendar .= "<th  class='header'>$day</th>";
+        $calendar .= "<th  class='header'><span class='help-block'>$day</span></th>";
     }
 
     // Create the rest of the calendar
@@ -80,7 +80,7 @@ function build_calendar($month, $year)
 
     if ($dayOfWeek > 0) {
         for ($k = 0; $k < $dayOfWeek; $k++) {
-            $calendar .= "<td  class='empty'></td>";
+            $calendar .= "<td  class='empty'><span class='help-block'></span></td>";
         }
     }
 
@@ -94,7 +94,7 @@ function build_calendar($month, $year)
         if ($dayOfWeek == 7) {
 
             $dayOfWeek = 0;
-            $calendar .= "</tr><tr>";
+            $calendar .= "</tr><span class='help-block'></span><tr>";
         }
 
         $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
@@ -106,7 +106,7 @@ function build_calendar($month, $year)
         $totalbookings = checkSlots($mysqli, $date);
 
         if ($dayname == 'friday') {
-            $calendar .= "<td><h4>$currentDay</h4> <label>Sorry, It's rest day!</label>";
+            $calendar .= "<td><span class='help-block'><h4>$currentDay</h4> <label>Sorry, It's rest day!</label>";
         }
         // elseif ($date < date('Y-m-d')) {
         //     $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs'>N/A</button>";
@@ -114,33 +114,33 @@ function build_calendar($month, $year)
         elseif ($dayname == 'tuesday') {
             // $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list2.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a>";
             if ($totalbookings == 16) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>Fully booked</a>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='#' class='cal-link btn btn-danger btn-xs'>Fully booked</a>";
             } else if ($totalbookings == 0) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list2.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a><br> <small><i>No appointment</i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-list2.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a><br> <p style='font-size:80%;'><i>No appointment</i></p>";
             } else {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list2.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a> <small><i><b>$totalbookings</b></i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-list2.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a> <p style='font-size:80%; color:#990000'><b>$totalbookings</b></p>";
             }
         } elseif ($dayname == 'thursday') {
             // $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a>";
             if ($totalbookings == 16) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>Fully booked</a>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='#' class='cal-link btn btn-danger btn-xs'>Fully booked</a>";
             } elseif ($totalbookings == 0) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a><br> <small><i>No appointment</i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-list.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a><br> <p style='font-size:80%;'><i>No appointment</i></p>";
             } else {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-list.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a> <small><i><b>$totalbookings</b></i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-list.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a> <p style='font-size:80%; color:#990000'><b>$totalbookings</b></p>";
             }
         } else {
 
             if ($totalbookings == 16) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='#' class='btn btn-danger btn-xs'>Fully booked</a>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='#' class='cal-link btn btn-danger btn-xs'>Fully booked</a>";
             } elseif ($totalbookings == 0) {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-normal.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a><br> <small><i>No appointment</i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-normal.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a><br> <p style='font-size:80%;'><i>No appointment</i></p>";
             } else {
-                $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='admin-normal.php?date=" . $date . "' class='btn btn-success btn-xs'>View timeslot</a> <small><i><b>$totalbookings</b></i><small>";
+                $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='admin-normal.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a> <p style='font-size:80%; color:#990000'><b>$totalbookings</b></p>";
             }
         }
 
-        $calendar .= "</td>";
+        $calendar .= "</span></td>";
         // Increment counters
 
         $currentDay++;
@@ -190,7 +190,8 @@ function checkSlots($mysqli, $date)
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
     <style>
         @media only screen and (max-width: 760px),
         (min-device-width: 802px) and (max-device-width: 1020px) {
@@ -299,28 +300,31 @@ function checkSlots($mysqli, $date)
         }
 
         .today {
-            background: yellow;
+            background: #7575a3;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <?php
-                $dateComponents = getdate();
-                if (isset($_GET['month']) && isset($_GET['year'])) {
-                    $month = $_GET['month'];
-                    $year = $_GET['year'];
-                } else {
-                    $month = $dateComponents['mon'];
-                    $year = $dateComponents['year'];
-                }
-                echo build_calendar($month, $year);
-                ?>
-            </div>
+    <div class="center-item">
+        <div class="container">
+            <a href="<?php echo BASE_URL . 'index.php' ?>" class="normal-link1">Home</a>
+            <!-- <div class="row">
+            <div class="col-md-12"> -->
+            <?php
+            $dateComponents = getdate();
+            if (isset($_GET['month']) && isset($_GET['year'])) {
+                $month = $_GET['month'];
+                $year = $_GET['year'];
+            } else {
+                $month = $dateComponents['mon'];
+                $year = $dateComponents['year'];
+            }
+            echo build_calendar($month, $year);
+            ?>
+            <!-- </div> -->
         </div>
+        <?php include(INCLUDE_PATH . "/layouts/footer.php") ?>
     </div>
 </body>
 
