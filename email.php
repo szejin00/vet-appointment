@@ -12,13 +12,13 @@ $mail->SMTPDebug = 2;
 $mail->isSMTP();                      // Set mailer to use SMTP 
 $mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
 $mail->SMTPAuth = true;               // Enable SMTP authentication 
-$mail->Username = 'szejin2000@gmail.com';   // SMTP username 
-$mail->Password = 'boo000420.';   // SMTP password 
+$mail->Username = 'animalclinicfyp@gmail.com';   // SMTP username 
+$mail->Password = 'fyptest123.';   // SMTP password 
 $mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
 $mail->Port = 587;                    // TCP port to connect to 
  
 // Sender info 
-$mail->setFrom('szejin2000@gmail.com', 'Sze Jin'); 
+$mail->setFrom('szejin2000@gmail.com', 'Animal Clinic'); 
 // $mail->addReplyTo('reply@codexworld.com', 'CodexWorld'); 
  
 // Add a recipient 

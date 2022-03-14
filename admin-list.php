@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href="table.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
 <?php
 // Include the database configuration file
 require_once 'config.php';
@@ -22,8 +19,6 @@ $approved_vet2 = $mysqli->query("SELECT * FROM bookings WHERE approval='approved
 
 $vet1 = "vet1";
 $vet2 = "vet2";
-echo "<a href='book.php?date=" . $date . "&vet=" . $vet1 . "'>Vet 1</a>";
-echo "<a href='operation.php?date=" . $date . "&vet=" . $vet2 . "'>Vet 2</a>";
 
 if (isset($_POST['submit'])) {
     $id = $_POST['id'];
@@ -48,13 +43,13 @@ if (isset($_POST['submit'])) {
             $mail->isSMTP();                      // Set mailer to use SMTP 
             $mail->Host = 'smtp.gmail.com';       // Specify main and backup SMTP servers 
             $mail->SMTPAuth = true;               // Enable SMTP authentication 
-            $mail->Username = 'szejin2000@gmail.com';   // SMTP username 
-            $mail->Password = 'boo000420.';   // SMTP password 
+            $mail->Username = 'animalclinicfyp@gmail.com';   // SMTP username 
+            $mail->Password = 'fyptest123.';   // SMTP password 
             $mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
             $mail->Port = 587;                    // TCP port to connect to 
 
             // Sender info 
-            $mail->setFrom('szejin2000@gmail.com', 'Sze Jin');
+            $mail->setFrom('szejin2000@gmail.com', 'Animal Clinic');
 
             // Add a recipient
             // $mail->addAddress('szejin2010@gmail.com');
@@ -94,7 +89,7 @@ if (isset($_POST['submit'])) {
                     $bodyContent = '<h1>Hi! Please check your appointment status.</h1>';
                     $bodyContent .= '<p>Owner Name: ' . $row['name'] . '</p>';
                     $bodyContent .= '<p>Pet Name: ' . $row['petname'] . '</p>';
-                    $bodyContent .= '<p>Reason: ' . $row['email'] . '</p>';
+                    $bodyContent .= '<p>Reason: ' . $row['reason'] . '</p>';
                     $bodyContent .= '<p>Time slot: ' . $row['timeslot'] . '</p>';
                     $bodyContent .= '<p>Appointment Date: ' . $row['date'] . '</p>';
                     $bodyContent .= '<p>Vet: ' . $row['vet'] . '</p>';
@@ -122,153 +117,262 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<?php if ($result->num_rows > 0) { ?>
-    <div class="gallery">
-        <div class="col-md-12">
-            <?php echo (isset($msg)) ? $msg : ""; ?>
-        </div>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row['id'] ?></div>
-                        <div class="col col-2"><?php echo $row['name'] ?></div>
-                        <div class="col col-2"><?php echo $row['date'] ?></div>
-                        <div class="col col-3"><?php echo $row['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row['vet'] ?></div>
-                        <div class="col col-5">
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <input name="id" type="hidden" value=" <?php echo $row['id'] ?> ">
-                                <input name="approval" type="hidden" value="approved">
-                                <input type="submit" name="submit" value="Approve">
-                            </form>
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <input name="id" type="hidden" value=" <?php echo $row['id'] ?> ">
-                                <input name="approval" type="hidden" value="denied">
-                                <input type="submit" name="submit" value="Deny">
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
 
-<?php if ($result_vet2->num_rows > 0) { ?>
-    <div class="gallery">
-        <?php while ($row2 = $result_vet2->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row2['id'] ?></div>
-                        <div class="col col-2"><?php echo $row2['name'] ?></div>
-                        <div class="col col-2"><?php echo $row2['date'] ?></div>
-                        <div class="col col-3"><?php echo $row2['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row2['vet'] ?></div>
-                        <div class="col col-5">
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <input name="id" type="hidden" value=" <?php echo $row2['id'] ?> ">
-                                <input name="approval" type="hidden" value="approved">
-                                <input type="submit" name="submit" value="Approve">
-                            </form>
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <input name="id" type="hidden" value=" <?php echo $row2['id'] ?> ">
-                                <input name="approval" type="hidden" value="denied">
-                                <input type="submit" name="submit" value="Deny">
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
+<html>
 
-<?php if ($apt_vet1->num_rows > 0) { ?>
-    <div class="gallery">
-        <?php while ($row = $apt_vet1->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row['id'] ?></div>
-                        <div class="col col-2"><?php echo $row['name'] ?></div>
-                        <div class="col col-2"><?php echo $row['date'] ?></div>
-                        <div class="col col-3"><?php echo $row['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row['vet'] ?></div>
-                        <div class="col col-5"><?php echo $row['approval'] ?></div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+    </style>
+</head>
 
-<?php if ($apt_vet2->num_rows > 0) { ?>
-    <div class="gallery">
-        <?php while ($row2 = $apt_vet2->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row2['id'] ?></div>
-                        <div class="col col-2"><?php echo $row2['name'] ?></div>
-                        <div class="col col-2"><?php echo $row2['date'] ?></div>
-                        <div class="col col-3"><?php echo $row2['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row2['vet'] ?></div>
-                        <div class="col col-5"><?php echo $row2['approval'] ?></div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
+<body>
+    <div class="container">
+    <a href="<?php echo BASE_URL . 'index.php' ?>" class="normal-link1">Home</a><br><br>
+    <a href='book.php?date=" . $date . "&vet=" . $vet1 . "' class='normal-link2'>Vet 1</a>
+    <a href='operation.php?date=" . $date . "&vet=" . $vet2 . "' class='normal-link2'>Vet 2</a>
+    <?php if ($apt_vet1->num_rows > 0) { ?>
+        <h4>Appointment [DR. MELVIN] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php while ($row = $apt_vet1->fetch_assoc()) { ?>
+                            <td class="textsize"><?php echo $row['id'] ?></td>
+                            <td class="textsize"><?php echo $row['name'] ?></td>
+                            <td class="textsize"><?php echo $row['petname'] ?></td>
+                            <td class="textsize"><?php echo $row['reason'] ?></td>
+                            <td class="textsize"><?php echo $row['date'] ?></td>
+                            <td class="textsize"><?php echo $row['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row['vet'] ?></td>
+                            <td class="textsize"><?php echo $row['approval'] ?></td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
 
-<?php if ($approved_vet1->num_rows > 0) { ?>
-    <div class="gallery">
-        <?php while ($row = $approved_vet1->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row['id'] ?></div>
-                        <div class="col col-2"><?php echo $row['name'] ?></div>
-                        <div class="col col-2"><?php echo $row['date'] ?></div>
-                        <div class="col col-3"><?php echo $row['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row['vet'] ?></div>
-                        <div class="col col-5"><?php echo $row['approval'] ?></div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
-    </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
+    <?php } ?>
 
-<?php if ($approved_vet2->num_rows > 0) { ?>
-    <div class="gallery">
-        <?php while ($row2 = $approved_vet2->fetch_assoc()) { ?>
-            <div class="container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1"><?php echo $row2['id'] ?></div>
-                        <div class="col col-2"><?php echo $row2['name'] ?></div>
-                        <div class="col col-2"><?php echo $row2['date'] ?></div>
-                        <div class="col col-3"><?php echo $row2['timeslot'] ?></div>
-                        <div class="col col-4"><?php echo $row2['vet'] ?></div>
-                        <div class="col col-5"><?php echo $row2['approval'] ?></div>
-                    </li>
-                </ul>
-            </div>
-        <?php } ?>
+    <?php if ($result->num_rows > 0) { ?>
+        <h4>Pending Approval [DR. MELVIN] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <?php echo (isset($msg)) ? $msg : ""; ?>
+            
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                
+                            <td class="textsize"><?php echo $row['id'] ?></td>
+                            <td class="textsize"><?php echo $row['name'] ?></td>
+                            <td class="textsize"><?php echo $row['petname'] ?></td>
+                            <td class="textsize"><?php echo $row['reason'] ?></td>
+                            <td class="textsize"><?php echo $row['date'] ?></td>
+                            <td class="textsize"><?php echo $row['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row['vet'] ?></td>
+                            <td class="textsize"><center>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <input name="id" type="hidden" value=" <?php echo $row['id'] ?> ">
+                                    <input name="approval" type="hidden" value="approved">
+                                    <input type="submit" name="submit" value="Approve">
+                                </form>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <input name="id" type="hidden" value=" <?php echo $row['id'] ?> ">
+                                    <input name="approval" type="hidden" value="denied">
+                                    <input type="submit" name="submit" value="Deny">
+                                </form></center>
+                            </td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
+
+    <?php } ?>
+
+    <?php if ($approved_vet1->num_rows > 0) { ?>
+        <h4>Pending Deposit Payment [DR. MELVIN] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+            <?php while ($row = $approved_vet1->fetch_assoc()) { ?>
+                
+                            <td class="textsize"><?php echo $row['id'] ?></td>
+                            <td class="textsize"><?php echo $row['name'] ?></td>
+                            <td class="textsize"><?php echo $row['petname'] ?></td>
+                            <td class="textsize"><?php echo $row['reason'] ?></td>
+                            <td class="textsize"><?php echo $row['date'] ?></td>
+                            <td class="textsize"><?php echo $row['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row['vet'] ?></td>
+                            <td class="textsize"><?php echo $row['approval'] ?></td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
+
+    <?php } ?>
+
+    <?php if ($apt_vet2->num_rows > 0) { ?>
+        <h4>Appointment [DR. SHISHA] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php while ($row2 = $apt_vet2->fetch_assoc()) { ?>
+                            <td class="textsize"><?php echo $row2['id'] ?></td>
+                            <td class="textsize"><?php echo $row2['name'] ?></td>
+                            <td class="textsize"><?php echo $row2['petname'] ?></td>
+                            <td class="textsize"><?php echo $row2['reason'] ?></td>
+                            <td class="textsize"><?php echo $row2['date'] ?></td>
+                            <td class="textsize"><?php echo $row2['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row2['vet'] ?></td>
+                            <td class="textsize"><?php echo $row2['approval'] ?></td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
+
+    <?php } ?>
+
+    <?php if ($result_vet2->num_rows > 0) { ?>
+        <h4>Pending Approval [DR. SHISHA] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <?php echo (isset($msg)) ? $msg : ""; ?>
+            
+            <?php while ($row2 = $result_vet2->fetch_assoc()) { ?>
+                
+                            <td class="textsize"><?php echo $row2['id'] ?></td>
+                            <td class="textsize"><?php echo $row2['name'] ?></td>
+                            <td class="textsize"><?php echo $row2['petname'] ?></td>
+                            <td class="textsize"><?php echo $row2['reason'] ?></td>
+                            <td class="textsize"><?php echo $row2['date'] ?></td>
+                            <td class="textsize"><?php echo $row2['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row2['vet'] ?></td>
+                            <td class="textsize"><center>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <input name="id" type="hidden" value=" <?php echo $row2['id'] ?> ">
+                                    <input name="approval" type="hidden" value="approved">
+                                    <input type="submit" name="submit" value="Approve">
+                                </form>
+                           
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <input name="id" type="hidden" value=" <?php echo $row2['id'] ?> ">
+                                    <input name="approval" type="hidden" value="denied">
+                                    <input type="submit" name="submit" value="Deny">
+                                </form></center>
+                            </td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
+
+    <?php } ?>
+
+    <?php if ($approved_vet2->num_rows > 0) { ?>
+        <h4>Pending Deposit Payment [DR. SHISHA] </h4>
+        <hr>
+        <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Owner</th>
+                            <th class="textsize">Petname</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+            <?php while ($row2 = $approved_vet2->fetch_assoc()) { ?>
+                
+                            <td class="textsize"><?php echo $row2['id'] ?></td>
+                            <td class="textsize"><?php echo $row2['name'] ?></td>
+                            <td class="textsize"><?php echo $row2['petname'] ?></td>
+                            <td class="textsize"><?php echo $row2['reason'] ?></td>
+                            <td class="textsize"><?php echo $row2['date'] ?></td>
+                            <td class="textsize"><?php echo $row2['timeslot'] ?></td>
+                            <td class="textsize"><?php echo $row2['vet'] ?></td>
+                            <td class="textsize"><?php echo $row2['approval'] ?></td>
+                            </tr>
+            <?php } ?>
+            </tbody>
+                </table>
+    <?php } else { ?>
+
+    <?php } ?>
     </div>
-<?php } else { ?>
-    <p class="status error">No appointments found...</p>
-<?php } ?>
+</body>
+
+</html>
