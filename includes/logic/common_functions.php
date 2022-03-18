@@ -11,6 +11,20 @@ function isAdmin($user_id)
     return false;
   }
 }
+
+function isVet($user_id)
+{
+  global $mysqli;
+  $sql = "SELECT * FROM users WHERE id=? AND role_id=3 LIMIT 1";
+  $user = getSingleRecord($sql, 'i', [$user_id]); // get single user from database
+  if (!empty($user)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 function loginById($user_id)
 {
   global $mysqli;

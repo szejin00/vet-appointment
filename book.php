@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $reason = $_POST['reason'];
     $petname = $_POST['petname'];
+    $pettype = $_POST['pettype'];
     $contact = $_POST['contact'];
     $timeslot = $_POST['timeslot'];
     $created_at = date('Y-m-d H:i:s');
@@ -35,8 +36,8 @@ if (isset($_POST['submit'])) {
         if ($result->num_rows > 0) {
             $msg = "<div class='alert alert-danger'>Already Booked</div>";
         } else {
-            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, reason, date, vet, petname, contact, approval, user_id, created_at) VALUES (?,?,?,?,?,?,?,?,?,?)");
-            $stmt->bind_param('ssssssssis', $name, $timeslot, $reason, $date, $vet, $petname, $contact, $approval, $user_id, $created_at);
+            $stmt = $mysqli->prepare("INSERT INTO bookings (name, timeslot, reason, date, vet, petname, pettype, contact, approval, user_id, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            $stmt->bind_param('sssssssssis', $name, $timeslot, $reason, $date, $vet, $petname, $pettype, $contact, $approval, $user_id, $created_at);
             $stmt->execute();
             $msg = "<div class='alert alert-success'>Booking Successful</div>";
             $bookings[] = $timeslot;
@@ -137,7 +138,7 @@ function timeslots($duration, $cleanup, $start, $end)
                                 </div>
                                 <div class="form-group">
                                     <label for="">Vet</label>
-                                    <input readonly type="text" class="form-control" value="<?php echo $vet ?>">
+                                    <input readonly type="text" class="form-control" value=<?php echo $vet ?>>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Owner's Name</label>
@@ -145,7 +146,16 @@ function timeslots($duration, $cleanup, $start, $end)
                                 </div>
                                 <div class="form-group">
                                     <label for="">Reason</label>
-                                    <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="max 25 words">
+                                    <select id="bookselect" name="reason" class="form-control">
+                                        <option value="Flu" name="flu">Flu</option>
+                                        <option value="Dental issue" name="dental">Dental issue</option>
+                                        <option value="Skin issue" name="skin">Skin issue</option>
+                                        <option value="Vaccination" name="vaccine">Vaccination</option>
+                                        <option value="General checkup" name="checkup" selected>General checkup</option>
+                                        <option value="General grooming" name="grooming">General Grooming</option>
+                                        <option value="Other" name="other">Other</option>
+                                    </select>
+                                    <!-- <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="max 25 words"> -->
                                 </div>
                                 <div class="form-group">
                                     <label for="">Contact</label>
@@ -154,6 +164,19 @@ function timeslots($duration, $cleanup, $start, $end)
                                 <div class="form-group">
                                     <label for="">Pet's Name</label>
                                     <input required type="text" class="form-control" name="petname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Pet Type</label>
+                                    <select id="bookselect" name="pettype" class="form-control">
+                                        <option value="Dog">Dog</option>
+                                        <option value="Cat">Cat</option>
+                                        <option value="Raptile">Raptile</option>
+                                        <option value="Guinea Pig">Guinea Pig</option>
+                                        <option value="Rabbit">Rabbit</option>
+                                        <option value="Bird">Bird</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <!-- <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="Dog/Cat/Rabbit/etc."> -->
                                 </div>
                                 <div class="form-group pull-right">
                                     <button name="submit" type="submit" class="btn btn-primary">Submit</button>

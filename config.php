@@ -36,7 +36,7 @@ while($row=$id->fetch_assoc()) {
   $mail->Port = 587;                    // TCP port to connect to 
 
   // Sender info 
-  $mail->setFrom('szejin2000@gmail.com', 'Animal Clinic');
+  $mail->setFrom('animalclinicfyp@gmail.com', 'Animal Clinic');
   // $mail->addReplyTo('reply@codexworld.com', 'CodexWorld'); 
 
   // Add a recipient

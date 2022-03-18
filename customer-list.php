@@ -15,6 +15,7 @@ $id = $_SESSION['user']['id'];
 $result_approved = $mysqli->query("SELECT * FROM bookings WHERE approval='approved' AND user_id = $id");
 $result_pending = $mysqli->query("SELECT * FROM bookings WHERE approval='pending' AND user_id = $id");
 $result_paid = $mysqli->query("SELECT * FROM bookings WHERE approval='paid' AND user_id = $id");
+$result_completed = $mysqli->query("SELECT * FROM bookings WHERE approval='completed' AND user_id = $id");
 $result_balance = $mysqli->query("SELECT * FROM ewallet WHERE user_id = $id");
 
 if (isset($_POST['submit'])) {
@@ -52,7 +53,7 @@ if (isset($_POST['submit'])) {
             $mail->Port = 587;                    // TCP port to connect to 
 
             // Sender info 
-            $mail->setFrom('szejin2000@gmail.com', 'Animal Clinic');
+            $mail->setFrom('animalclinicfyp@gmail.com', 'Animal Clinic');
             // $mail->addReplyTo('reply@codexworld.com', 'CodexWorld'); 
 
             // Add a recipient
@@ -90,7 +91,7 @@ if (isset($_POST['submit'])) {
 
                     // Mail body content 
                     $bodyContent = '<h1>Hi! This is your appointment detail :)</h1>';
-                    $bodyContent .= '<p>Owner Name: ' . $row['name'] . '</p>';
+                    $bodyContent .= '<p>Pet Owner Name: ' . $row['name'] . '</p>';
                     $bodyContent .= '<p>Pet Name: ' . $row['petname'] . '</p>';
                     $bodyContent .= '<p>Reason: ' . $row['reason'] . '</p>';
                     $bodyContent .= '<p>Time slot: ' . $row['timeslot'] . '</p>';
@@ -153,8 +154,9 @@ if (isset($_POST['submit'])) {
                     <thead>
                         <tr>
                             <th class="textsize">ID</th>
-                            <th class="textsize">Owner</th>
-                            <th class="textsize">Petname</th>
+                            <th class="textsize">Pet Owner</th>
+                            <th class="textsize">Pet Name</th>
+                            <th class="textsize">Pet Type</th>
                             <th class="textsize">Reason</th>
                             <th class="textsize">Date</th>
                             <th class="textsize">Timeslot</th>
@@ -168,6 +170,7 @@ if (isset($_POST['submit'])) {
                                 <td class="textsize"><?php echo $row['id'] ?></td>
                                 <td class="textsize"><?php echo $row['name'] ?></td>
                                 <td class="textsize"><?php echo $row['petname'] ?></td>
+                                <td class="textsize"><?php echo $row['pettype'] ?></td>
                                 <td class="textsize"><?php echo $row['reason'] ?></td>
                                 <td class="textsize"><?php echo $row['date'] ?></td>
                                 <td class="textsize"><?php echo $row['timeslot'] ?></td>
@@ -200,8 +203,9 @@ if (isset($_POST['submit'])) {
                     <thead>
                         <tr>
                             <th class="textsize">ID</th>
-                            <th class="textsize">Owner</th>
-                            <th class="textsize">Petname</th>
+                            <th class="textsize">Pet Owner</th>
+                            <th class="textsize">Pet Name</th>
+                            <th class="textsize">Pet Type</th>
                             <th class="textsize">Reason</th>
                             <th class="textsize">Date</th>
                             <th class="textsize">Timeslot</th>
@@ -216,6 +220,7 @@ if (isset($_POST['submit'])) {
                                 <td class="textsize"><?php echo $row['id'] ?></td>
                                 <td class="textsize"><?php echo $row['name'] ?></td>
                                 <td class="textsize"><?php echo $row['petname'] ?></td>
+                                <td class="textsize"><?php echo $row['pettype'] ?></td>
                                 <td class="textsize"><?php echo $row['reason'] ?></td>
                                 <td class="textsize"><?php echo $row['date'] ?></td>
                                 <td class="textsize"><?php echo $row['timeslot'] ?></td>
@@ -240,8 +245,9 @@ if (isset($_POST['submit'])) {
                     <thead>
                         <tr>
                             <th class="textsize">ID</th>
-                            <th class="textsize">Owner</th>
-                            <th class="textsize">Petname</th>
+                            <th class="textsize">Pet Owner</th>
+                            <th class="textsize">Pet Name</th>
+                            <th class="textsize">Pet Type</th>
                             <th class="textsize">Reason</th>
                             <th class="textsize">Date</th>
                             <th class="textsize">Timeslot</th>
@@ -256,6 +262,47 @@ if (isset($_POST['submit'])) {
                                 <td class="textsize"><?php echo $row['id'] ?></td>
                                 <td class="textsize"><?php echo $row['name'] ?></td>
                                 <td class="textsize"><?php echo $row['petname'] ?></td>
+                                <td class="textsize"><?php echo $row['pettype'] ?></td>
+                                <td class="textsize"><?php echo $row['reason'] ?></td>
+                                <td class="textsize"><?php echo $row['date'] ?></td>
+                                <td class="textsize"><?php echo $row['timeslot'] ?></td>
+                                <td class="textsize"><?php echo $row['vet'] ?></td>
+                                <td class="textsize"><?php echo $row['approval'] ?></td>
+
+                        </tr>
+
+                    <?php } ?>
+                    </tbody>
+                </table>
+            <?php } else { ?>
+
+            <?php } ?>
+
+            <?php if ($result_completed->num_rows > 0) { ?>
+                <h4>Appointment Completed</h4>
+                <hr>
+                <table class="table table-bordered" id="userlist">
+                    <thead>
+                        <tr>
+                            <th class="textsize">ID</th>
+                            <th class="textsize">Pet Owner</th>
+                            <th class="textsize">Pet Name</th>
+                            <th class="textsize">Pet Type</th>
+                            <th class="textsize">Reason</th>
+                            <th class="textsize">Date</th>
+                            <th class="textsize">Timeslot</th>
+                            <th class="textsize">Vet</th>
+                            <th colspan="2" class="text-center textsize">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <?php while ($row = $result_completed->fetch_assoc()) { ?>
+
+                                <td class="textsize"><?php echo $row['id'] ?></td>
+                                <td class="textsize"><?php echo $row['name'] ?></td>
+                                <td class="textsize"><?php echo $row['petname'] ?></td>
+                                <td class="textsize"><?php echo $row['pettype'] ?></td>
                                 <td class="textsize"><?php echo $row['reason'] ?></td>
                                 <td class="textsize"><?php echo $row['date'] ?></td>
                                 <td class="textsize"><?php echo $row['timeslot'] ?></td>

@@ -2,7 +2,7 @@
 <?php require_once '../middleware.php'; ?>
 <?php include(ROOT_PATH . '/admin/users/userLogic.php') ?>
 <?php
-$adminUsers = getAdminUsers();
+$vetUsers = getVetUsers();
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,9 +22,9 @@ $adminUsers = getAdminUsers();
     <div class="center-item">
         <div class="container">
             <div class="col-md-8 col-md-offset-2" id="form-con">
-                <a href="userForm.php" class="normal-link1">Create new user</a><br><br><br>
-                <hr>
-                <h1 class="text-center">Admin Users</h1>
+                <!-- <a href="userForm.php" class="normal-link1">Create new user</a><br><br><br>
+                <hr> -->
+                <h1 class="text-center">Vet Users</h1>
                 <br />
                 <?php if (isset($users)) : ?>
                     <table class="table table-bordered" id="userlist">
@@ -37,21 +37,21 @@ $adminUsers = getAdminUsers();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($adminUsers as $key => $value) : ?>
+                            <?php foreach ($vetUsers as $key => $value) : ?>
                                 <tr>
                                     <td><?php echo $key + 1; ?></td>
                                     <td><?php echo $value['username'] ?></td>
                                     <td><?php echo $value['role']; ?></td>
                                     <td class="text-center" id="btn-conti"><center>
-                                        <a href="<?php echo BASE_URL ?>admin/users/userForm.php?edit_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-success icon-link">
+                                        <a href="<?php echo BASE_URL ?>admin/users/userForm2.php?edit_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-success icon-link">
                                             <span class="material-icons" id="apt-icon">edit</span></center>
                                         </a>
                                     </td>
-                                    <td class="text-center"id="btn-conti"><center>
-                                        <a href="<?php echo BASE_URL ?>admin/users/userForm.php?delete_user2=<?php echo $value['id'] ?>" class="btn btn-sm btn-danger icon-link">
+                                    <!-- <td class="text-center"id="btn-conti"><center>
+                                        <a href="<?php echo BASE_URL ?>admin/users/userForm.php?delete_user=<?php echo $value['id'] ?>" class="btn btn-sm btn-danger icon-link">
                                             <span class="material-icons" id="apt-icon">delete</span></center>
                                         </a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

@@ -105,7 +105,7 @@ function build_calendar($month, $year)
         $today = $date == date('Y-m-d') ? "today" : "";
         if ($dayname == 'friday') {
             $calendar .= "<td><span class='help-block'><h4>$currentDay</h4> <label>Sorry, It's rest day!</label>";
-        } elseif ($date < date('Y-m-d')) {
+        } elseif ($date <= date('Y-m-d')) {
             $calendar .= "<td><span class='help-block'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs'>N/A</button>";
         } elseif ($dayname == 'tuesday') {
             $calendar .= "<td class='$today'><span class='help-block'><h4>$currentDay</h4> <a href='vetop.php?date=" . $date . "' class='cal-link btn btn-success btn-xs'>View timeslot</a>";

@@ -149,6 +149,10 @@ function timeslots($duration, $cleanup, $start, $end)
                                     <label for="">Pet's Name</label>
                                     <input required type="text" class="form-control" name="petname">
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Pet Type</label>
+                                    <input required type="text" class="form-control" name="reason" maxlength="25" placeholder="Dog/Cat/Rabbit/etc.">
+                                </div>
                                 <div class="form-group pull-right">
                                     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
                                 </div>

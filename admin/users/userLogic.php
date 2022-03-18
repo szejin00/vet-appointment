@@ -33,6 +33,11 @@ if (isset($_POST['save_user'])) {  // if user clicked save_user button ...
 if (isset($_POST['save_user1'])) {  // if user clicked save_user button ...
     saveUser1();
 }
+
+if (isset($_POST['save_user2'])) {  // if user clicked save_user button ...
+    saveUser2();
+}
+
 // ACTION: fetch user for editting
 if (isset($_GET["edit_user"])) {
     $user_id = $_GET["edit_user"];
@@ -48,6 +53,12 @@ if (isset($_GET['delete_user1'])) {
     $user_id = $_GET['delete_user1'];
     deleteUser1($user_id);
 }
+
+if (isset($_GET['delete_user2'])) {
+    $user_id = $_GET['delete_user2'];
+    deleteUser2($user_id);
+}
+
 
 if (isset($_POST['update_profile'])) {
     $user_id = $_SESSION['user']['id'];
@@ -137,6 +148,32 @@ function saveUser1()
     }
 }
 
+function saveUser2()
+{
+    global $mysqli, $errors, $username, $role_id, $email, $isEditing;
+    $errors = validateUser($_POST, ['save_user2']);
+    // receive all input values from the form
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); //encrypt the password before saving in the database
+    if (count($errors) === 0) {
+        if (isset($_POST['role_id'])) {
+            $role_id = $_POST['role_id'];
+        }
+        $sql = "INSERT INTO users SET username=?, role_id=?, email=?, password=?";
+        $result = modifyRecord($sql, 'siss', [$username, $role_id, $email, $password]);
+
+        if ($result) {
+            $_SESSION['success_msg'] = "User account created successfully";
+            header("location: " . BASE_URL . "admin/users/vetuserList.php");
+            exit(0);
+        } else {
+            $_SESSION['error_msg'] = "Something went wrong. Could not save user in Database";
+        }
+    }
+}
+
+
 function getAdminUsers()
 {
     global $mysqli;
@@ -146,6 +183,20 @@ function getAdminUsers()
           FROM users u
           LEFT JOIN roles r ON u.role_id=r.id
           WHERE role_id=1 AND u.id != ?";
+
+    $users = getMultipleRecords($sql, 'i', [$_SESSION['user']['id']]);
+    return $users;
+}
+
+function getVetUsers()
+{
+    global $mysqli;
+    // for every user, select a user role name from roles table, and then id, role_id and username from user table
+    // where the role_id on user table matches the id on roles table
+    $sql = "SELECT r.name as role, u.id, u.role_id, u.username
+          FROM users u
+          LEFT JOIN roles r ON u.role_id=r.id
+          WHERE role_id=3 AND u.id != ?";
 
     $users = getMultipleRecords($sql, 'i', [$_SESSION['user']['id']]);
     return $users;
@@ -200,6 +251,19 @@ function deleteUser1($user_id)
     if ($result) {
         $_SESSION['success_msg'] = "Customer User deleted!";
         header("location: " . BASE_URL . "admin/users/customerList.php");
+        exit(0);
+    }
+}
+
+function deleteUser2($user_id)
+{
+    global $mysqli;
+    $sql = "DELETE FROM users WHERE id=?";
+    $result = modifyRecord($sql, 'i', [$user_id]);
+
+    if ($result) {
+        $_SESSION['success_msg'] = "Vet User deleted!";
+        header("location: " . BASE_URL . "admin/users/vetuserList.php");
         exit(0);
     }
 }
